@@ -46,3 +46,6 @@ wynik[6].insert(0,"sob")
 print(tabulate(wynik, tablefmt="fancy_grid"))
 
 
+def evaluate(a,b):
+    print("hoho")
+
