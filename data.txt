@@ -1,0 +1,7 @@
+Number of iterations: 10
+Number of parents: 10
+Mutate%: 50
+Pracownicy: A,B,C,D,E,F,G,H
+Preferencje: [A,0] [B,1] [C,2] [H,14] [B,15] [G,16]
+Antypreferencje: [A,1] [A,2] [E,1] [C,14]
+
