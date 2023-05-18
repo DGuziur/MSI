@@ -1,12 +1,9 @@
 import random
 import pandas as pd
+from Converter import *
 
-number_of_iterations = 50
-number_of_parents = 100
-work_shifts = 21
-mutate_percent = 50
-employees = [1, 2, 3, 4, 5, 6]
 population = []
+work_shifts = 21
 
 df1 = pd.DataFrame(columns=["osobnik","fitness"])
 
@@ -19,14 +16,16 @@ def create_starting_population(e):
 
 def evaluate_fitness(chromosome):
     fitness = 0
-    for i in range(len(chromosome)-1):
-      if chromosome[i] == chromosome[i + 1]:
-        fitness +=1
-    if chromosome[0] != 1:
-        fitness += 1
-    if chromosome[20] != 2:
-        fitness += 1
-    print(f"Fitness = {str(fitness)}")
+    for a in antipreferences:
+        if a[0] == chromosome[int(a[1])]:
+            fitness += 1
+    for p in preferences:
+        if p[0] == chromosome[int(p[1])]:
+            fitness -= 1
+    for d in range(len(chromosome)-1):
+        if chromosome[d] == chromosome[d + 1]:
+            fitness +=1   
+    print(fitness)   
     return fitness
 
 create_starting_population(number_of_parents)

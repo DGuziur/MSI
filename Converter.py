@@ -2,8 +2,6 @@ import re
 
 f = open("data.txt", "r").read()
 
-print(f)
-
 data = re.findall(":.+", f)
 
 number_of_iterations = data[0].replace(":", "").strip()
