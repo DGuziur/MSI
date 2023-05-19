@@ -2,19 +2,14 @@ import pandas as pd
 import random
 from Converter import *
 
-chromosome = ['A', 'B', 'C', 'D', 'E', 'B', 'E', 'D', 'E', 'E', 'E', 'A', 'C', 'D', 'H', 'C', 'D', 'E', 'B', 'C', 'B']
+chromosome = [['A','B','C'],['D','E','F']]
 
-def evaluate_fitness(chromosome):
-    fitness = 0
-    for a in antipreferences:
-        if a[0] == chromosome[int(a[1])]:
-            fitness += 1
-    for p in preferences:
-        if p[0] == chromosome[int(p[1])]:
-            fitness -= 1
-    for d in range(len(chromosome)-1):
-        if chromosome[d] == chromosome[d + 1]:
-            fitness +=1        
-    return fitness
+def mutate(chromosome):
+    if mutate_percent <= random.randint(1,100):
+        mutated_gene = random.randint(0, 1)
+        mutation = random.choice(chromosome[mutated_gene])
+        i = chromosome[mutated_gene].index(mutation)
+        chromosome[mutated_gene][i] = random.choice(employees)
 
-print(evaluate_fitness(chromosome))
+mutate(chromosome)
+print(chromosome)
