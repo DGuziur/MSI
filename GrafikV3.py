@@ -1,6 +1,7 @@
 import random
 import pandas as pd
 import re
+import time
 from Converter import *
 
 population = []
@@ -42,7 +43,6 @@ def evaluate_fitness(chromosome):
     for x in chromosome:
         if x != set(x):
             fitness += 5
-    print(fitness)   
     return fitness
 
 def kill_the_weak(population):
@@ -55,7 +55,6 @@ def tournament_selection(population):
         contestants = random.sample(population, 2)
         winner = min(contestants, key=evaluate_fitness)
         selected.append(winner)
-    print(selected)
     for el in range(len(selected) - 1):
         crossover(selected[el], selected[el + 1])
 
@@ -67,17 +66,22 @@ def crossover(parent1, parent2):
     mutate(child2)
     population.append(child1)
     population.append(child2)
-    kill_the_weak(population)
 
 def mutate(chromosome):
     if mutate_percent <= random.randint(1,100):
-        mutated_gene = random.randint(0, 1)
-        mutation = random.choice(chromosome[mutated_gene])
-        i = chromosome[mutated_gene].index(mutation)
-        chromosome[mutated_gene][i] = random.choice(employees)
+        for i in range(random.randint(1, 10)):
+            mutated_gene = random.randint(0, 1)
+            mutation = random.choice(chromosome[mutated_gene])
+            i = chromosome[mutated_gene].index(mutation)
+            chromosome[mutated_gene][i] = random.choice(employees)
 
 
 create_starting_population(number_of_parents)
 
 for i in range(number_of_iterations):
     tournament_selection(population)
+    kill_the_weak(population)
+    pop = []
+    for el in population:
+        pop.append(evaluate_fitness(el))
+    print(pop)
