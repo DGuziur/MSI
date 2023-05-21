@@ -63,6 +63,8 @@ def tournament_selection(population):
         crossover(selected[el], selected[el + 1])
 
 def crossover(parent1, parent2):
+    population.remove(parent1)
+    population.remove(parent2)
     pop = []
     for el in population:
         pop.append(evaluate_fitness(el))
@@ -70,8 +72,8 @@ def crossover(parent1, parent2):
     split_point = random.randint(1, len(work_shifts) - 1)
     child1 = parent1[:split_point] + parent2[split_point:]
     child2 = parent2[:split_point] + parent1[split_point:]
-    #mutate(child1)
-    #mutate(child2)
+    child1 = mutate(child1)
+    child2 = mutate(child2)
     population.append(child1)
     population.append(child2)
     pop = []
@@ -80,13 +82,14 @@ def crossover(parent1, parent2):
     print(f'PostCrossover{pop}')
 
 def mutate(child):
+    child = child.copy()
     if mutate_percent <= random.randint(1,100):
         for i in range(random.randint(1, 10)):
-            mutated_gene = random.randint(1, len(work_shifts) - 1)
-            mutation = random.choice(child[mutated_gene])
-            i = child[mutated_gene].index(mutation)
-            child[mutated_gene][i] = random.choice(employees)
-    population.append(child)
+            day = random.randint(0, len(child)-1)
+            gene = random.randint(0, len(child[day])-1)
+            mutation = random.choice(employees)
+            child[day][gene] = mutation
+    return child
 
 create_starting_population(number_of_parents)
 

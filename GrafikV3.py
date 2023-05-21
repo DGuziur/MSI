@@ -80,10 +80,10 @@ def crossover(parent1, parent2):
 def mutate(child):
     if mutate_percent <= random.randint(1,100):
         for i in range(random.randint(1, 10)):
-            mutated_gene = random.randint(1, len(work_shifts) - 1)
-            mutation = random.choice(child[mutated_gene])
-            i = child[mutated_gene].index(mutation)
-            child[mutated_gene][i] = random.choice(employees)
+            day = random.randint(0, len(child)-1)
+            gene = random.randint(0, len(child[day])-1)
+            mutation = random.choice(employees)
+            child[day][gene] = mutation
     population.append(child)
 
 create_starting_population(number_of_parents)
