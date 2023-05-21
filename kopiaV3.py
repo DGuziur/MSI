@@ -70,8 +70,10 @@ def crossover(parent1, parent2):
     split_point = random.randint(1, len(work_shifts) - 1)
     child1 = parent1[:split_point] + parent2[split_point:]
     child2 = parent2[:split_point] + parent1[split_point:]
-    mutate(child1)
-    mutate(child2)
+    #mutate(child1)
+    #mutate(child2)
+    population.append(child1)
+    population.append(child2)
     pop = []
     for el in population:
         pop.append(evaluate_fitness(el))
