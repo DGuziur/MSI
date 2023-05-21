@@ -1,5 +1,5 @@
-Number of iterations: 300
-Number of parents: 50
+Number of iterations: 100
+Number of parents: 100
 Mutate%: 50
 Pracownicy: A,B,C,D,E,F,G,H
 Preferencje: [A,0] [B,1]

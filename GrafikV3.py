@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import time
 from Converter import *
+import copy
 
 population = []
 work_shifts = ["pn-1","pn-2","pn-3","wt-1","wt-2","wt-3","sr-1","sr-2",
@@ -43,18 +44,15 @@ def evaluate_fitness(chromosome):
     for x in chromosome:
         if x != set(x):
             fitness += 5
+    print(fitness)
     return fitness
 
 def kill_the_weak(population):
-    while len(population) > 10:
+    while len(population) > 100:
         population.remove(max(population, key=evaluate_fitness))
 
 def tournament_selection(population):
     selected = []
-    pop = []
-    for el in population:
-        pop.append(evaluate_fitness(el))
-    print(f'Tournament{pop}')
     for i in range(len(population)):
         contestants = random.sample(population, 2)
         winner = min(contestants, key=evaluate_fitness)
@@ -63,28 +61,23 @@ def tournament_selection(population):
         crossover(selected[el], selected[el + 1])
 
 def crossover(parent1, parent2):
-    pop = []
-    for el in population:
-        pop.append(evaluate_fitness(el))
-    print(f'Crossover{pop}')
     split_point = random.randint(1, len(work_shifts) - 1)
     child1 = parent1[:split_point] + parent2[split_point:]
     child2 = parent2[:split_point] + parent1[split_point:]
-    mutate(child1)
-    mutate(child2)
-    pop = []
-    for el in population:
-        pop.append(evaluate_fitness(el))
-    print(f'PostCrossover{pop}')
+    child1 = mutate(child1)
+    child2 = mutate(child2)
+    population.append(child1)
+    population.append(child2)
 
 def mutate(child):
+    child = copy.deepcopy(child)
     if mutate_percent <= random.randint(1,100):
         for i in range(random.randint(1, 10)):
             day = random.randint(0, len(child)-1)
             gene = random.randint(0, len(child[day])-1)
             mutation = random.choice(employees)
             child[day][gene] = mutation
-    population.append(child)
+    return child
 
 create_starting_population(number_of_parents)
 
