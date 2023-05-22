@@ -21,9 +21,11 @@ def evaluate_fitness(chromosome):
             if el in chromosome[d+2]:
                 fitness += 1
     for x in chromosome:
-        if x != set(x):
+        if len(x) != len(set(x)):
             fitness += 5
     print(fitness)
     return fitness
 
 evaluate_fitness(chromosome)
+
+

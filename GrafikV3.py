@@ -42,7 +42,7 @@ def evaluate_fitness(chromosome):
             if el in chromosome[d+2]:
                 fitness += 1
     for x in chromosome:
-        if x != set(x):
+        if len(x) != len(set(x)):
             fitness += 5
     print(fitness)
     return fitness
@@ -64,13 +64,11 @@ def crossover(parent1, parent2):
     split_point = random.randint(1, len(work_shifts) - 1)
     mutate(parent1[:split_point] + parent2[split_point:])
     mutate(parent2[:split_point] + parent1[split_point:])
-    #child1 = mutate(child1)
-    #child2 = mutate(child2)
 
 def mutate(child):
     child = copy.deepcopy(child)
     if mutate_percent <= random.randint(1,100):
-         for i in range(random.randint(1, 1)):
+         for i in range(random.randint(1, 2)):
             emp = copy.deepcopy(employees)
             mutated_gene = random.randint(0, len(work_shifts) - 1)
             for el in set(child[mutated_gene]):
