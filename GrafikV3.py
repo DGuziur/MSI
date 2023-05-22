@@ -48,7 +48,7 @@ def evaluate_fitness(chromosome):
     return fitness
 
 def kill_the_weak(population):
-    while len(population) > 100:
+    while len(population) > 10:
         population.remove(max(population, key=evaluate_fitness))
 
 def tournament_selection(population):
@@ -62,25 +62,27 @@ def tournament_selection(population):
 
 def crossover(parent1, parent2):
     split_point = random.randint(1, len(work_shifts) - 1)
-    child1 = parent1[:split_point] + parent2[split_point:]
-    child2 = parent2[:split_point] + parent1[split_point:]
-    child1 = mutate(child1)
-    child2 = mutate(child2)
-    population.append(child1)
-    population.append(child2)
+    mutate(parent1[:split_point] + parent2[split_point:])
+    mutate(parent2[:split_point] + parent1[split_point:])
+    #child1 = mutate(child1)
+    #child2 = mutate(child2)
 
 def mutate(child):
     child = copy.deepcopy(child)
     if mutate_percent <= random.randint(1,100):
-        for i in range(random.randint(1, 10)):
-            day = random.randint(0, len(child)-1)
-            gene = random.randint(0, len(child[day])-1)
-            mutation = random.choice(employees)
-            child[day][gene] = mutation
-    return child
+         for i in range(random.randint(1, 1)):
+            emp = copy.deepcopy(employees)
+            mutated_gene = random.randint(0, len(work_shifts) - 1)
+            for el in set(child[mutated_gene]):
+                emp.remove(el)
+            mutation = random.choice(child[mutated_gene])
+            child[mutated_gene][child[mutated_gene].index(mutation)] = random.choice(emp)
+    population.append(child)
 
 create_starting_population(number_of_parents)
 
 for i in range(number_of_iterations):
     tournament_selection(population)
     kill_the_weak(population)
+
+print(f"Wynik: {min(population, key=evaluate_fitness)}")
