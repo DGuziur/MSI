@@ -90,6 +90,10 @@ for i in range(number_of_iterations):
                    columns=["pn-1","pn-2","pn-3","wt-1","wt-2","wt-3","sr-1","sr-2",
                             "sr-3","czw-1","czw-2","czw-3","pt-1","pt-2","pt-3","fitness"])
         df1 = pd.concat([df1, df2])
-        
+
+df3 = pd.DataFrame([[min(population, key=evaluate_fitness)]],
+                   index=["naj"],
+                   columns=["najlepszy"])
+df1 = pd.concat([df3, df1])
 df1.to_excel("Wynik.xlsx")
 print(f"Wynik: {min(population, key=evaluate_fitness)}")
